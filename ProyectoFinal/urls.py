@@ -22,5 +22,6 @@ from django.http import HttpResponseRedirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('DIDs/', include('DIDs.urls')),
+    path('Accounts/', include('accounts.urls')),
     path('', lambda request: HttpResponseRedirect('DIDs/Inicio/'))
 ]
