@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        .result-box {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #333;
+            color: white;
+            
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>Search DID number</h1>
+    <form action="{% url 'BusDIDs' %}" method="get">
+        <label for="numero">Number:</label>
+        <input type="text" id="numero" name="numero" maxlength="15" required>
+        <input type="submit" value="Buscar">
+    </form>
+
+    {% if resultado %}
+    <div class="result-box">
+        <h2>Search Results:</h2>
+        <p><strong>DID Number:</strong> {{ resultado.numero }}</p>
+        <p><strong>Country:</strong> {{ resultado.pais }}</p>
+        <p><strong>Company:</strong> {{ resultado.empresa }}</p>
+        <p><strong>Minutes of Use:</strong> {{ resultado.minutos_uso }}</p>
+    </div>
+    {% elif mensaje %}
+    <div class="result-box">
+        <p>{{ mensaje }}</p>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+
+</body>
+
+</html>

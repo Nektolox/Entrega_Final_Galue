@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update DID</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center; /* Centrar título */
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>Update DID</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="empresa">Company:</label>
+        <select id="empresa" name="empresa" required>
+            {% for compania in companias %}
+                <option value="{{ compania.nombre }}" {% if compania.nombre == object.empresa %}selected{% endif %}>{{ compania.nombre }}</option>
+            {% endfor %}
+        </select>
+        <label for="minutos_uso">Minutes of Use:</label>
+        <input type="number" id="minutos_uso" name="minutos_uso" value="{{ object.minutos_uso }}" required>
+        <input type="submit" value="Update">
+    </form>
+
+    {% endblock %}
+</body>
+
+</html>
+

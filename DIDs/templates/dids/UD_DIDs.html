@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search DID by Company</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="submit"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid white;
+            text-align: center;
+        }
+
+        th {
+            background-color: #444;
+            text-align: center;
+        }
+
+        td {
+            background-color: white;
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .buttons a {
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #333;
+        }
+
+        .buttons a:hover {
+            background-color: white;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>Search DIDs by Company</h1>
+    <form method="GET">
+        <label for="empresa">Company:</label>
+        <select id="empresa" name="empresa" required>
+            <option value="" disabled selected>Select a company</option>
+            {% for compania in companias %}
+                <option value="{{ compania.nombre }}">{{ compania.nombre }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search">
+    </form>
+
+    {% if dids %}
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Country</th>
+                <th>Minutes of Use</th>
+                <th>Company</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for did in dids %}
+            <tr>
+                <td>{{ did.numero }}</td>
+                <td>{{ did.pais }}</td>
+                <td>{{ did.minutos_uso }}</td>
+                <td>{{ did.empresa }}</td>
+                <td class="buttons">
+                    <a href="{% url 'UpdateDID' did.pk %}">Update</a>
+                    <a href="{% url 'DeleteDID' did.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% endblock %}
+</body>
+
+</html>
+
+

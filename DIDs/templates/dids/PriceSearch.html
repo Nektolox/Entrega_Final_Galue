@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tarifa by Country</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="submit"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .result-box {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 20px;
+            border: 1px solid white;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #444;
+        }
+
+        .buttons a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .cancel {
+            background-color: red;
+        }
+
+        .cancel:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>Search Tarifa by Country</h1>
+    <form method="GET">
+        <label for="pais">Country:</label>
+        <select id="pais" name="pais" required>
+            <option value="" disabled selected>Select a country</option>
+            {% for tarifa in tarifas %}
+                <option value="{{ tarifa.pais }}">{{ tarifa.pais }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search">
+    </form>
+
+    {% if tarifa %}
+    <div class="result-box">
+        <h2>Search Results:</h2>
+        <p><strong>Country:</strong> {{ tarifa.pais }}</p>
+        <p><strong>Incoming Traffic Price:</strong> ${{ tarifa.trafico_entrante }}</p>
+        <p><strong>Outgoing Traffic Price:</strong> ${{ tarifa.trafico_saliente }}</p>
+        <p><strong>Price per Number:</strong> ${{ tarifa.precio_por_numero }}</p>
+        <div class="buttons">
+            <a href="{% url 'UpdateTarifa' tarifa.pk %}" class="update">Update</a>
+            <a href="{% url 'DeleteTarifa' tarifa.pk %}" class="cancel">Delete</a>
+        </div>
+    </div>
+    {% elif mensaje %}
+    <div class="result-box">
+        <p>{{ mensaje }}</p>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+</body>
+
+</html>

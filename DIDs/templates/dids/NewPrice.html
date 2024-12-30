@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Tarifa</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>New Price Offer</h1>
+    <form action="{% url 'RegTar' %}" method="POST">
+        {% csrf_token %}
+        <label for="trafico_entrante">Incoming Traffic:</label>
+        <input type="number" step="0.0001" id="trafico_entrante" name="trafico_entrante" required>
+        <label for="trafico_saliente">Outgoing Traffic:</label>
+        <input type="number" step="0.0001" id="trafico_saliente" name="trafico_saliente" required>
+        <label for="precio_por_numero">Price per Number:</label>
+        <input type="number" step="0.0001" id="precio_por_numero" name="precio_por_numero" required>
+        <label for="pais">Country:</label> <input type="text" id="pais" name="pais" maxlength="30" required>
+        <input type="submit" value="Enviar">
+    </form>
+
+    {% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Company</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="submit"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .result-box {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 20px;
+            border: 1px solid white;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #444;
+        }
+
+        .buttons a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .cancel {
+            background-color: red;
+        }
+
+        .cancel:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Página de Inicio{% endblock %}
+
+    {% block contenidoQueCambia %}
+
+    <h1>Search Company by Name</h1>
+    <form method="GET">
+        <label for="nombre">Company Name:</label>
+        <select id="nombre" name="nombre" required>
+            <option value="" disabled selected>Select a company</option>
+            {% for compania in companias %}
+                <option value="{{ compania.nombre }}">{{ compania.nombre }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search">
+    </form>
+
+    {% if compania %}
+    <div class="result-box">
+        <h2>Search Results:</h2>
+        <p><strong>Company Name:</strong> {{ compania.nombre }}</p>
+        <p><strong>Address:</strong> {{ compania.direccion }}</p>
+        <p><strong>Postal Code:</strong> {{ compania.codigo_postal }}</p>
+        <p><strong>Contact Person:</strong> {{ compania.persona_contacto }}</p>
+        <p><strong>NOC Email:</strong> {{ compania.NOCemail }}</p>
+        <div class="buttons">
+            <a href="{% url 'UpdateCompania' compania.pk %}" class="update">Update</a>
+            <a href="{% url 'DeleteCompania' compania.pk %}" class="cancel">Delete</a>
+        </div>
+    </div>
+    {% elif mensaje %}
+    <div class="result-box">
+        <p>{{ mensaje }}</p>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+</body>
+
+</html>

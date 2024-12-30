@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Heroic Features - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="{% static 'dids/css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-lg-5">
+            <a class="navbar-brand" href="#!">NGs Telecom</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'Inicio' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">DID</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
+                            <li><a class="dropdown-item" href="{% url 'RegDIDs' %}">New Number</a></li>
+                            <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
+                            <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Edit Numbers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Commercial Rates</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
+                            <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Companies</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
+                            <li><a class="dropdown-item" href="{% url 'RegComp' %}">New Company</a></li>
+                            <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block contenidoQueCambia %}
+    <!-- Header-->
+    <header class="py-5">
+        <div class="container px-lg-5">
+            <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+                <div class="m-4 m-lg-5">
+                    <h1 class="display-5 fw-bold">Welcome to the NGs Telecom DIDs portal:</h1>
+                    <p class="fs-4">Welcome to our interactive portal! Here, you can register your DIDs, companies, and
+                        rates to unlock new business opportunities. You can also easily search for existing numbers,
+                        companies, and rates to gather valuable information.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; NGs Telecom 2024</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
