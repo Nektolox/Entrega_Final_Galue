@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Heroic Features - Start Bootstrap Template</title>
+    <title>{% block title %}Heroic Features - Start Bootstrap Template{% endblock %}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -32,31 +32,69 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'Inicio' %}">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">DID</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
-                            <li><a class="dropdown-item" href="{% url 'RegDIDs' %}">New Number</a></li>
-                            <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
-                            <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Edit Numbers</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Commercial Rates</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
-                            <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
-                            <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Companies</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
-                            <li><a class="dropdown-item" href="{% url 'RegComp' %}">New Company</a></li>
-                            <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
-                        </ul>
-                    </li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_technical %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">DID</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
+                                    <li><a class="dropdown-item" href="{% url 'RegDIDs' %}">New Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Edit Numbers</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Commercial Rates</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
+                                    <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Companies</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
+                                    <li><a class="dropdown-item" href="{% url 'RegComp' %}">New Company</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
+                                </ul>
+                            </li>
+                        {% elif user.is_commercial %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">DID</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Check Company Numbers</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Commercial Rates</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
+                                    <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Companies</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
+                                    <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'Logout' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none; background: none;">Log Out</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'Login' %}">Sign In</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -92,3 +130,4 @@
 </body>
 
 </html>
+

@@ -1,14 +1,91 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola</title>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label,
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Hola</h1>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Login{% endblock %}
+
+    {% block contenidoQueCambia %}
+    <h1>Login</h1>
+    {% if form.errors %}
+    <p class="error">Nombre de usuario o contraseña incorrectos.</p>
+    {% endif %}
+    <form action="{% url 'Login' %}" method="post">
+        {% csrf_token %}
+        <label for="username">Nombre de Usuario:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <input type="submit" value="Login">
+    </form>
+    {% endblock %}
 </body>
 
 </html>

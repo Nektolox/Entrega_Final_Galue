@@ -6,8 +6,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser, TechnicalUser, CommercialUser
 from django.views.generic import TemplateView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView, LogoutView
 
-# accounts/views.py
 
 class RegisterView(View):
     template_name = 'accounts/Register.html'
@@ -39,6 +40,35 @@ class RegisterView(View):
         return redirect(self.success_url)
 
 
-
-class HelloView(TemplateView):
+class CustomLoginView(LoginView):
     template_name = 'accounts/Login.html'
+    
+    def get_success_url(self):
+        user = self.request.user
+        if user.is_technical:
+            return reverse_lazy('Inicio')  # Cambia 'technical_dashboard' por la URL de tu vista técnica
+        elif user.is_commercial:
+            return reverse_lazy('Inicio')  # Cambia 'commercial_dashboard' por la URL de tu vista comercial
+        else:
+            return reverse_lazy('Login')
+    
+    def form_invalid(self, form):
+        form.add_error(None, 'Nombre de usuario o contraseña incorrectos.')
+        return super().form_invalid(form)
+
+class CustomLogoutView(LogoutView):
+    template_name = 'accounts/Logout.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        response = super().dispatch(request, *args, **kwargs)
+        response.set_cookie('first_name', user.first_name)
+        response.set_cookie('last_name', user.last_name)
+        return response
+
+    def get_next_page(self):
+        next_page = super().get_next_page()
+        if next_page:
+            return next_page
+        return redirect('Login')
+

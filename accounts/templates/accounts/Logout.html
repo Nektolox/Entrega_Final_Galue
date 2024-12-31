@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        p {
+            text-align: center;
+            color: #fff;
+        }
+
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}Logout{% endblock %}
+
+    {% block contenidoQueCambia %}
+    <div class="container">
+        <h1>Has cerrado sesión</h1>
+        <p>Gracias por visitarnos, {{ request.COOKIES.first_name }} {{ request.COOKIES.last_name }}. Esperamos que vuelvas pronto.</p>
+        <p>Haz <a href="{% url 'Login' %}">click aquí</a> para iniciar sesión de nuevo.</p>
+    </div>
+    {% endblock %}
+</body>
+
+</html>
