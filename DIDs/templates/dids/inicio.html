@@ -84,11 +84,24 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <form method="post" action="{% url 'Logout' %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none; background: none;">Log Out</button>
-                            </form>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Account</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
+                                <li>
+                                    <form method="post" action="{% url 'Logout' %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
+                                {% if user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user_list' %}">Delete Users</a></li>
+                                {% elif user.is_technical %}
+                                    <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
+                                {% endif %}
+                            </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
@@ -130,4 +143,5 @@
 </body>
 
 </html>
+
 

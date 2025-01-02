@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Users</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid white;
+            text-align: left;
+        }
+
+        th {
+            background-color: #444;
+        }
+
+        td {
+            background-color: white;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background-color: red;
+        }
+
+        .btn-update {
+            background-color: blue;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends "dids/inicio.html" %} {% load static %}
+
+    {% block title %}List of Users{% endblock %}
+
+    {% block contenidoQueCambia %}
+    <div class="container">
+        <h1>List of Users</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{% url 'user_update' user.pk %}" class="btn btn-update">Update</a>
+                        <a href="{% url 'user_delete' user.pk %}" class="btn btn-delete">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+</body>
+
+</html>
+
+

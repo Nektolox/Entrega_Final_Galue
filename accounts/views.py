@@ -1,13 +1,19 @@
 # accounts/views.py
 
 from django.urls import reverse_lazy
-from django.views.generic.edit import View
-from django.shortcuts import render, redirect
+from django.views.generic.edit import View, DeleteView, UpdateView
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser, TechnicalUser, CommercialUser
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import user_passes_test
+
+## from django.contrib.auth.models import User
+
 
 
 class RegisterView(View):
@@ -71,4 +77,43 @@ class CustomLogoutView(LogoutView):
         if next_page:
             return next_page
         return redirect('Login')
+
+
+class CustomPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    template_name = 'accounts/PasswordChange.html'
+    success_url = reverse_lazy('change_password')
+    success_message = "Tu contraseña ha sido cambiada exitosamente."
+
+
+
+
+
+
+
+# Solo el superusuario puede acceder a estas vistas
+def superuser_required(user):
+    return user.is_superuser
+
+@user_passes_test(superuser_required)
+def user_list(request):
+    users = CustomUser.objects.all()
+    return render(request, 'accounts/ListUsers.html', {'users': users})
+
+class UserDeleteView(UserPassesTestMixin, DeleteView):
+    model = CustomUser
+    template_name = 'accounts/DeleteUserCom.html'
+    success_url = reverse_lazy('user_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class UserUpdateView(UserPassesTestMixin, UpdateView):
+    model = CustomUser
+    fields = ['username', 'first_name', 'last_name', 'email']
+    template_name = 'accounts/UpdateUsers.html'
+    success_url = reverse_lazy('user_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
 
