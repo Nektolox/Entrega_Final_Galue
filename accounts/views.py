@@ -11,6 +11,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 
 ## from django.contrib.auth.models import User
 
@@ -85,9 +86,18 @@ class CustomPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, Password
     success_message = "Tu contraseña ha sido cambiada exitosamente."
 
 
-
-
-
+@login_required
+def change_avatar(request):
+    if request.method == 'POST':
+        avatar = request.FILES.get('avatar')
+        if avatar:
+            user = request.user
+            if user.avatar:
+                user.avatar.delete(save=False)  # Eliminar el avatar anterior
+            user.avatar = avatar
+            user.save()
+            return redirect('Inicio')
+    return render(request, 'accounts/Avatarchange.html', {'user': request.user})
 
 
 # Solo el superusuario puede acceder a estas vistas

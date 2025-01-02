@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponseRedirect
+from django.conf import settings 
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -24,4 +26,4 @@ urlpatterns = [
     path('DIDs/', include('DIDs.urls')),
     path('Accounts/', include('accounts.urls')),
     path('', lambda request: HttpResponseRedirect('DIDs/Inicio/'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

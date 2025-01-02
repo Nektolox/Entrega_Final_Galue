@@ -22,7 +22,18 @@
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container px-lg-5">
-            <a class="navbar-brand" href="#!">NGs Telecom</a>
+            {% if user.is_authenticated %}
+                <div class="navbar-brand">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+                    {% else %}
+                        <img src="{% static 'default-avatar.png' %}" alt="Avatar" class="avatar" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+                    {% endif %}
+                    Welcome, {{ user.first_name }} {{ user.last_name }}
+                </div>
+            {% else %}
+                <a class="navbar-brand" href="#!">NGs Telecom</a>
+            {% endif %}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -95,9 +106,10 @@
                                     </form>
                                 </li>
                                 <li><a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
+                                <li><a class="dropdown-item" href="{% url 'change_avatar' %}">Change Avatar</a></li>
                                 {% if user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'user_list' %}">Delete Users</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user_list' %}">Modify Users</a></li>
                                 {% elif user.is_technical %}
                                     <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
                                 {% endif %}

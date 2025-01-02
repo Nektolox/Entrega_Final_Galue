@@ -6,12 +6,26 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     is_technical = models.BooleanField(default=False)
     is_commercial = models.BooleanField(default=False)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)  # Nuevo campo para el avatar
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.username})"
+    
+    def delete_old_avatar(self):
+        if self.avatar:
+            self.avatar.delete(save=False)
+    
+    def save(self, *args, **kwargs):
+        try:
+            this = CustomUser.objects.get(id=self.id)
+            if this.avatar != self.avatar:
+                this.avatar.delete(save=False)
+        except:
+            pass
+        super(CustomUser, self).save(*args, **kwargs)
 
 class TechnicalUser(CustomUser):
     def save(self, *args, **kwargs):
@@ -28,4 +42,5 @@ class CommercialUser(CustomUser):
         if not self.email.endswith('@ngtelecom.sales'):
             raise ValueError('Email must belong to @ngtelecom.sales domain.')
         super().save(*args, **kwargs)
+
 

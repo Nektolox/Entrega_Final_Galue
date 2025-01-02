@@ -1,6 +1,6 @@
 # accounts/urls.py
 from django.urls import path
-from .views import RegisterView, CustomLoginView, CustomLogoutView,CustomPasswordChangeView, user_list, UserDeleteView, UserUpdateView
+from .views import RegisterView, CustomLoginView, CustomLogoutView,CustomPasswordChangeView, user_list, UserDeleteView, UserUpdateView, change_avatar
 
 
 
@@ -12,8 +12,8 @@ urlpatterns = [
     path('users/', user_list, name='user_list'),
     path('users/delete/<int:pk>/', UserDeleteView.as_view(), name='user_delete'),
     path('users/update/<int:pk>/', UserUpdateView.as_view(), name='user_update'),
-
-
+    path('AvatarChange/', change_avatar, name='change_avatar'),
 ]
+
 
 
