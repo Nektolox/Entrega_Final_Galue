@@ -16,6 +16,10 @@ class InicioView(TemplateView):
     
     template_name = 'dids/Inicio.html'
 
+class AboutMeView(TemplateView): 
+    
+    template_name = 'dids/AboutMe.html'
+
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(technical_or_commercial_or_superuser_required, name='dispatch')

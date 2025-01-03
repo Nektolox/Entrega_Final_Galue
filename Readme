@@ -1,0 +1,210 @@
+# Portal de DIDs realizado por Neptali Galue
+
+Un DIDs son números de telefono que comercializan empresas de Telecomunicaciones, con el fin de 
+darle un tratamiento especial a aquellos numeros telefonicos que pertenezcan a servicios de alta demanda. Por ejemplo: números de emergencias, empresas, etc.
+
+El proyecto cuenta con una barra de navegación en la parte superior, a continuación se describe cada una:
+
+De entrada unicamente observaran la pagina de inicio en la cual solamente encontraran una NAV VAR con 3 opciones.
+
+# Inicio:
+
+Simplementes es la pagina de presentación, la idea es leer la presentación y seleccionar una de las opciones de la barra de navegación
+
+# About Me
+
+Muestra información sobre el creador de la página y de donde salió la idea.
+
+# Sing In
+
+Permite iniciar sesión a la plataforma. Si se introduce manualmente cualquier URL sin haber iniciado sesión Automaticamente seran redirigidos a la pagina de Inicio.
+
+En este proyecto existen 3 tipos de Usuarios:
+
+# Super Usuarios: # Con acceso a absolutamente todas las opciones de la pagina
+
+Username: root
+Password: NG96261333
+
+# Usuarios Tecnicos: # Con acceso a la mayoria de las opciones de la pagina excepto a le edición de otros usuarios.
+
+Username: ChritianF
+Password: NOC$2025..
+
+# Usuarios comerciales: # Con acceso a ciertas funcionalidades de la pagina
+
+Username: AnaVallee
+Password: SALES$2024..
+
+
+# Al Iniciar sesion, la Nav Var se extiende a 6 opciones #
+
+
+# 1. Inicio: al que pueden acceder todos los usuarios #
+
+
+Simplementes es la pagina de presentación, la idea es leer la presentación y seleccionar una de las opciones de la barra de navegación
+
+
+# 2. DIDs: Modulo que se encarga del CRUD de la numeración #
+
+
+# New Number: al que pueden acceder usuarios tecnicos y superusuarios #
+
+Aqui se puede agregar o registrar un numero nuevo en la base de datos. Para ello va a pedir:
+
+DID Number: numero de telefono que se desea agregar a la base de datos
+
+Country: Pais al que pertenece el número
+
+Company: Compañia a la cual se asignara el numero
+
+MOU: Minutos de uso que se desean asignar 
+
+# Search Number: al que pueden acceder todos los usuarios #
+
+Aqui se puede buscar un numero DIDs, si el numero esta registrado obtendremos la información del numero:
+
+Country: Pais al que pertenece el número
+
+Company: Compañia que tiene el número asignado, este campo sera un menu desplegable segun la compañia creada. Y Se actualizara si cambia el nombre de la compañia
+
+MOU: Minutos de uso asignados al número consultado 
+
+Se pueden buscar los numeros: 5491151386624 y 584141031198
+
+Si el número no esta en la base de datos arrojara un mensaje de número inexistente y dejara buscar uno nuevo
+
+# Edit Numbers (Para usuarios tecnicos y superusuarios) # Check Company Numbers (para usuarios comerciales)#
+
+Aca todos los tipos de usuarios pueden acceder a todos los numeros que tiene asignada una compañia. Los usuarios tecnicos y super usuarios podran editar o borrar un numero si asi lo desean. Mientras que los comerciales unicamente podran observar que numeros tiene asignada una empresa
+
+
+# 3. Commercial Rates: Modulo que se encarga del CRUD de las tarifas #
+
+
+# Search rate al que pueden acceder todos los usuarios #
+
+Aqui se puede buscar la tarifa que se ofrece en función del pais al que pertenece un DID, si el pais esta registrado obtendremos la información finaciera:
+
+Incoming Price: Precio que tiene el minuto de llamada al marcar numeros de ese pais
+
+Outgoing Price: Precio que tiene el minuto de llamada al marcar numeros de ese pais
+
+Price per Number: Precio que se cobra mensualmente por tener asignado un numero de este pais
+
+Se pueden buscar los paises: Argentina y Venezuela
+
+Si el pais no esta en la base de datos arrojara un mensaje diciendo que no existen tarifas para ese pais y dejara buscar uno nuevo
+
+Por otro lado, si el pais es encontrado se podra modificar y/o borrar dicha tarifa
+
+# New Offer al que pueden acceder todos los usuarios #
+
+Aqui se puede agregar o registrar una oferta nueva a la base de datos. Para ello va a pedir:
+
+Incoming Traffic: valor de 4 decimales para indicar el costo por minuto de una llamada de un numero de ese pais
+
+Outgoing Traffic: valor de 4 decimales para indicar el costo por minuto de una llamada realizada desde un numero de ese pais
+
+Price per number: precio que se cobrara mensualmente por la asignacion del numero
+Country: Minutos de uso que se desean asignar 
+
+Coyntry: pais al que pertenece el numero
+
+
+# 4. Companies: Modulo que se encarga del CRUD de las compañias #
+
+
+# Search Company al que pueden acceder todos los usuarios #
+
+Aqui se puede buscar las empresas registradas en la bse de datos, si la empresa esta registrada obtendremos:
+
+Addres: Dirección de la empresa
+
+Postal Code: Codigo Postal
+
+Contact Person: Persona asiganada como contacto de dicha empresa
+
+NOC Email: correo al cual se enviara cualquier tipo de información tecnica
+
+Se pueden buscar las empresas: "SmartBiz Telecom" e IPLAN
+
+Si el la empresa no esta en la base de datos arrojara un mensaje diciendo que no esta registrada y dejara buscar otra
+
+Por otro lado, si la empresa es encontrada en la base de datos, los superusuarios y usuarios tecnicos podran borrar y modificar los datos de la misma
+
+# New Company al que pueden usuarios tecnicos o superusuarios #
+
+Aqui se puede agregar o registrar una empresa nueva en la base de datos. Para ello va a pedir:
+
+Addres: Dirección de la empresa
+
+Postal Code: Codigo Postal
+
+Company Name: Nombre de la empresa
+
+Contact Person: Persona asiganada como contacto de dicha empresa
+
+NOC Email: correo al cual se enviara cualquier tipo de información tecnica
+
+
+# 5. Tickets: Modulo que simula la funcionalidad de blog y gestiona el CRUD de las mismas #
+
+
+Todo en esto modulo puede ser ejecutado por cualquier tipo de usuario.
+
+# New Request: #
+
+Modulo donde se crea una nueva solicitud, para ello se solicitará
+
+Titulo: nombre que se le dará a la solicitud
+
+Prioridad: nivel de importancia de la solicitud
+
+Content: el mensaje o solicitud que se desea compartir
+
+# Current Requests: #
+
+Aca los usuarios podran ver una lista de todas las solicitudes creadas.
+
+Podran acceder a ellas a traves del hypervinculo y al lado de este podran ver el autor, la prioridad y la hora del ultimo comentario.
+
+Al entrar, podran ver el detalle de la solicitud asi como de los comentarios. Mostrandose el Avatar, nombre y hora de cada interacción.
+
+Además, podran agregar, borrar o modificar un comentario en dicha publicación
+
+
+# 6. Accounts: Modulo que simula realiza el CRUD de los ususarios #
+
+# Funcinalidades de todos los usuarios: #
+
+Estas funcionalidades serán:
+
+# Logout # 
+
+Funcionalidad que Cierra la sesión y muestra la pagina de Logout.
+
+# Change Password #
+
+Funcionalidad que permite cambiar la contraseña del usuario escribiendo la contraseña anterior y la nueva.
+
+# Change Avatar #
+
+Funcionalidad que permite modificar el avatar del usuario que se ha logueado.
+
+# Funcinalidades de los usuarios tecnios y superusuarios #
+
+Esta funcionalidad es:
+
+# Register New User #
+
+Aca los usuarios tecnicos y superusuarios podran reistrar nuevos trabajadores en la plataforma. Si son tecnicos su dominio debe ser @ngtelecom.noc, si son comerciales @ngtelecom.sales. De otra manera, no podran ser registrados.
+
+# Funcinalidades del superusuario #
+
+Esta funcionalidad es:
+
+# Modify Users #
+
+Aca los superusuarios podran modificar la información de los otros usuarios, asi como tambien podran eliminarlos

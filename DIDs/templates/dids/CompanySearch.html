@@ -119,10 +119,12 @@
         <p><strong>Postal Code:</strong> {{ compania.codigo_postal }}</p>
         <p><strong>Contact Person:</strong> {{ compania.persona_contacto }}</p>
         <p><strong>NOC Email:</strong> {{ compania.NOCemail }}</p>
+        {% if user.is_technical or user.is_superuser %}
         <div class="buttons">
             <a href="{% url 'UpdateCompania' compania.pk %}" class="update">Update</a>
             <a href="{% url 'DeleteCompania' compania.pk %}" class="cancel">Delete</a>
         </div>
+        {% endif %}
     </div>
     {% elif mensaje %}
     <div class="result-box">
@@ -134,3 +136,4 @@
 </body>
 
 </html>
+

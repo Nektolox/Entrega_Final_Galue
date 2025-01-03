@@ -21,7 +21,7 @@ from django.utils.decorators import method_decorator
 @method_decorator(technical_required, name='dispatch')
 class RegisterView(View):
     template_name = 'accounts/Register.html'
-    success_url = reverse_lazy('Login')
+    success_url = reverse_lazy('Inicio')
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
@@ -33,6 +33,7 @@ class RegisterView(View):
         last_name = request.POST.get('last_name')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
+        avatar = request.FILES.get('avatar')
 
         if password1 != password2:
             return render(request, self.template_name, {'error': 'Las contraseñas no coinciden.'})
@@ -41,12 +42,13 @@ class RegisterView(View):
             return render(request, self.template_name, {'error': 'El correo electrónico debe pertenecer a los dominios empresariales'})
 
         if email.endswith('@ngtelecom.noc'):
-            user = TechnicalUser(username=username, email=email, first_name=first_name, last_name=last_name, password=make_password(password1))
+            user = TechnicalUser(username=username, email=email, first_name=first_name, last_name=last_name, password=make_password(password1), avatar=avatar)
         elif email.endswith('@ngtelecom.sales'):
-            user = CommercialUser(username=username, email=email, first_name=first_name, last_name=last_name, password=make_password(password1))
+            user = CommercialUser(username=username, email=email, first_name=first_name, last_name=last_name, password=make_password(password1), avatar=avatar)
 
         user.save()
         return redirect(self.success_url)
+
 
 
 class CustomLoginView(LoginView):

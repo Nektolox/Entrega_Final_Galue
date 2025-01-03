@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import InicioView, DIDListView, DIDCreateView, TarifaSearchView, TarifaCreateView, CompaniaSearchView, CompaniaUpdateView, CompaniaDeleteView, CompaniaCreateView, DIDCompanySearchView, DIDUpdateView, DIDDeleteView, TarifaUpdateView, TarifaDeleteView,TicketListView, TicketDetailView, TicketCreateView, EditCommentView, DeleteCommentView, EditTicketView
+from .views import InicioView, DIDListView, DIDCreateView, TarifaSearchView, TarifaCreateView, CompaniaSearchView, CompaniaUpdateView, CompaniaDeleteView, CompaniaCreateView, DIDCompanySearchView, DIDUpdateView, DIDDeleteView, TarifaUpdateView, TarifaDeleteView,TicketListView, TicketDetailView, TicketCreateView, EditCommentView, DeleteCommentView, EditTicketView, AboutMeView
 
 urlpatterns = [
     path('Inicio/', InicioView.as_view(), name="Inicio"),
+    path('AboutMe/', AboutMeView.as_view(), name="AboutMe"),
     path('BuscarDIDs/', DIDListView.as_view(), name="BusDIDs"),
     path('UD_DIDs/', DIDCompanySearchView.as_view(), name='BusDIDsByCompany'),
     path('UpdateDIDs/<int:pk>/', DIDUpdateView.as_view(), name='UpdateDID'),
