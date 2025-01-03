@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +10,9 @@
             color: white;
             font-family: Arial, sans-serif;
         }
-
         h1 {
             text-align: center;
         }
-
         form {
             max-width: 400px;
             margin: 0 auto;
@@ -23,34 +20,26 @@
             border: 1px solid white;
             border-radius: 10px;
         }
-
-        label,
-        select,
-        input {
+        label, select, input {
             display: block;
             width: 100%;
             margin-bottom: 10px;
         }
-
-        select,
-        input[type="submit"] {
+        select, input[type="submit"] {
             padding: 8px;
             border-radius: 5px;
             border: 1px solid white;
             background-color: #333;
             color: white;
         }
-
         input[type="submit"] {
             cursor: pointer;
             margin-top: 20px;
         }
-
         input[type="submit"]:hover {
             background-color: white;
             color: #333;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -58,29 +47,23 @@
             background-color: white;
             color: black;
         }
-
-        th,
-        td {
+        th, td {
             padding: 10px;
             border: 1px solid white;
             text-align: center;
         }
-
         th {
             background-color: #444;
             text-align: center;
         }
-
         td {
             background-color: white;
             text-align: center;
         }
-
         .buttons {
             display: flex;
             justify-content: space-around;
         }
-
         .buttons a {
             padding: 5px 10px;
             border: 1px solid white;
@@ -89,22 +72,18 @@
             color: white;
             background-color: #333;
         }
-
         .buttons a:hover {
             background-color: white;
             color: #333;
         }
     </style>
 </head>
-
 <body>
-    
     {% extends "dids/inicio.html" %} {% load static %}
 
     {% block title %}Página de Inicio{% endblock %}
 
     {% block contenidoQueCambia %}
-
     <h1>Search DIDs by Company</h1>
     <form method="GET">
         <label for="empresa">Company:</label>
@@ -125,7 +104,9 @@
                 <th>Country</th>
                 <th>Minutes of Use</th>
                 <th>Company</th>
+                {% if user.is_technical %}
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -135,19 +116,21 @@
                 <td>{{ did.pais }}</td>
                 <td>{{ did.minutos_uso }}</td>
                 <td>{{ did.empresa }}</td>
+                {% if user.is_technical %}
                 <td class="buttons">
                     <a href="{% url 'UpdateDID' did.pk %}">Update</a>
                     <a href="{% url 'DeleteDID' did.pk %}">Delete</a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% endif %}
-
     {% endblock %}
 </body>
-
 </html>
+
+
 
 

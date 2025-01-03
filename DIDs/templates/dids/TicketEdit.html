@@ -1,0 +1,67 @@
+{% extends "dids/inicio.html" %}
+{% load static %}
+
+{% block title %}Edit Ticket{% endblock %}
+
+{% block contenidoQueCambia %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ticket</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label, input, textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        textarea {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: #333;
+            color: white;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Ticket</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="content">Content:</label>
+        <textarea name="content" id="content" rows="5" required>{{ ticket.content }}</textarea>
+        <input type="submit" value="Update Ticket">
+    </form>
+</body>
+</html>
+{% endblock %}
+

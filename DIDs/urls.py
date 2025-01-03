@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import InicioView, DIDListView, DIDCreateView, TarifaSearchView, TarifaCreateView, CompaniaSearchView, CompaniaUpdateView, CompaniaDeleteView, CompaniaCreateView, DIDCompanySearchView, DIDUpdateView, DIDDeleteView, TarifaUpdateView, TarifaDeleteView
+from .views import InicioView, DIDListView, DIDCreateView, TarifaSearchView, TarifaCreateView, CompaniaSearchView, CompaniaUpdateView, CompaniaDeleteView, CompaniaCreateView, DIDCompanySearchView, DIDUpdateView, DIDDeleteView, TarifaUpdateView, TarifaDeleteView,TicketListView, TicketDetailView, TicketCreateView, EditCommentView, DeleteCommentView, EditTicketView
 
 urlpatterns = [
     path('Inicio/', InicioView.as_view(), name="Inicio"),
@@ -16,9 +16,15 @@ urlpatterns = [
     path('compania/update/<int:pk>/', CompaniaUpdateView.as_view(), name='UpdateCompania'), 
     path('compania/delete/<int:pk>/', CompaniaDeleteView.as_view(), name='DeleteCompania'),
     path('RegistrarComp/', CompaniaCreateView.as_view(), name="RegComp"),
-
-
+    path('Tickets/', TicketListView.as_view(), name='ticket_list'),
+    path('Tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket_detail'),
+    path('Tickets/new/', TicketCreateView.as_view(), name='ticket_create'),
+    path('Ticket/Edit/<int:pk>/', EditTicketView.as_view(), name='edit_ticket'),
+    path('Comment/Edit/<int:pk>/', EditCommentView.as_view(), name='edit_comment'),
+    path('Comment/Delete/<int:pk>/', DeleteCommentView.as_view(), name='delete_comment'),
 ]
+
+
 
 
 

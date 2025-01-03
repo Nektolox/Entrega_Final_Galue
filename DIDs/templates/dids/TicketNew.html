@@ -1,21 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cambiar Avatar</title>
+    <title>Create Trouble Ticket</title>
     <style>
         body {
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
         }
-
-        h1 {
-            text-align: center;
-        }
-
         form {
             max-width: 400px;
             margin: 0 auto;
@@ -23,22 +18,21 @@
             border: 1px solid white;
             border-radius: 10px;
         }
-
-        label,
-        input {
+        h1 {
+            text-align: center;
+        }
+        label, input, textarea, select {
             display: block;
             width: 100%;
             margin-bottom: 10px;
         }
-
-        input[type="file"] {
+        input[type="text"], input[type="email"], textarea, select {
             padding: 8px;
             border-radius: 5px;
             border: 1px solid white;
             background-color: #333;
             color: white;
         }
-
         input[type="submit"] {
             padding: 10px 20px;
             border: none;
@@ -48,50 +42,36 @@
             cursor: pointer;
             margin-top: 20px;
         }
-
         input[type="submit"]:hover {
             background-color: white;
             color: #333;
         }
-
-        .avatar-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .avatar-container img {
-            display: block;
-            margin: 0 auto;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-        }
     </style>
 </head>
-
 <body>
-    {% extends "dids/inicio.html" %} {% load static %}
 
-    {% block title %}Cambiar Avatar{% endblock %}
+    {% extends "dids/inicio.html" %} {% load static %}
+    {% block title %}Crear Trouble Ticket{% endblock %}
 
     {% block contenidoQueCambia %}
-    <h1>Change Avatar</h1>
-    <form method="POST" enctype="multipart/form-data"> <!-- Añadido enctype -->
+    <h1>Create Trouble Ticket</h1>
+    <form method="post">
         {% csrf_token %}
-        <label for="avatar">Please Select a new Avatar:</label>
-        <input type="file" id="avatar" name="avatar" required>
-        <input type="submit" value="Submit">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" maxlength="100" required>
+
+        <label for="subtitle">Priority:</label>
+        <select id="subtitle" name="subtitle" required>
+            <option value="Prioridad Alta">Prioridad Alta</option>
+            <option value="Prioridad Media">Prioridad Media</option>
+            <option value="Prioridad Baja">Prioridad Baja</option>
+        </select>
+
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" rows="5" required></textarea>
+
+        <input type="submit" value="Create Ticket">
     </form>
-
-    {% if user.avatar %}
-    <div class="avatar-container">
-        <h2>Current Avatar:</h2>
-        <img src="{{ user.avatar.url }}" alt="Avatar">
-    </div>
-    {% endif %}
-
     {% endblock %}
 </body>
-
 </html>
-

@@ -1,0 +1,244 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ticket.title }}</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .author-info, .comment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .author-info p, .comment p {
+            text-align: center;
+        }
+        .box {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+        label, input, textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        textarea, input[type="text"], input[type="email"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: #333;
+            color: white;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="{% static 'dids/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <!-- Responsive navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-lg-5">
+            {% if user.is_authenticated %}
+                <div class="navbar-brand">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+                    {% else %}
+                        <img src="{% static 'default-avatar.png' %}" alt="Avatar" class="avatar" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+                    {% endif %}
+                    Welcome, {{ user.first_name }} {{ user.last_name }}
+                </div>
+            {% else %}
+                <a class="navbar-brand" href="#!">NGs Telecom</a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'Inicio' %}">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_technical %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">DID</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
+                                    <li><a class="dropdown-item" href="{% url 'RegDIDs' %}">New Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Edit Numbers</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Commercial Rates</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
+                                    <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Companies</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
+                                    <li><a class="dropdown-item" href="{% url 'RegComp' %}">New Company</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
+                                </ul>
+                            </li>
+                        {% elif user.is_commercial %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDID" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">DID</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownDID">
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDs' %}">Search Number</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusDIDsByCompany' %}">Check Company Numbers</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRates" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Commercial Rates</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownRates">
+                                    <li><a class="dropdown-item" href="{% url 'RegTar' %}">New Offer</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusTar' %}">Search Rate</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCompanies" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Companies</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCompanies">
+                                    <li><a class="dropdown-item" href="{% url 'BusComp' %}">Search Company</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Account</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
+                                <li>
+                                    <form method="post" action="{% url 'Logout' %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
+                                <li><a class="dropdown-item" href="{% url 'change_avatar' %}">Change Avatar</a></li>
+                                {% if user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user_list' %}">Modify Users</a></li>
+                                {% elif user.is_technical %}
+                                    <li><a class="dropdown-item" href="{% url 'Register' %}">Register New User</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'Login' %}">Sign In</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </[_{{{CITATION{{{_1{](https://github.com/Silence-dream/Study-Note/tree/53141385fd5d9d39b6c5f309b38e122fe99c2f38/01%E5%89%8D%E7%AB%AF%2FJavaScript%2FNode.md)[_{{{CITATION{{{_2{](https://github.com/andyrhman/covid19/tree/09a90516f5dc222f27ceeefa67ccc4153a7459a4/app%2Finclude%2Fheader.php)[_{{{CITATION{{{_3{](https://github.com/dandyIrawan/SI-Pakar_Semester6/tree/a4c9f43cd1179297f001ef8405f04c5eaa848096/index.php)[_{{{CITATION{{{_4{](https://github.com/muhammadnassuha/dompetdonasi/tree/8eea83b795f2efb9800528ea0d75534a401acdfd/login_user%2Fall_campaign_user%2Findex.php)[_{{{CITATION{{{_5{](https://github.com/Alamgirhossann/aircnc/tree/9c791dc62046e84a75d178c728e6f95083a72f66/src%2FComponents%2FShared%2FNavbar%2FNavbar.js)[_{{{CITATION{{{_6{](https://github.com/FaiyadAhmedSudipto/doctors-portal-solution-home-page/tree/24cd3cc5166499f19b0cc1ca3d8f5c379f5fbe62/src%2Fcomponents%2FHome%2FNavbar%2FNavbar.js)[_{{{CITATION{{{_7{](https://github.com/maykeandani/webmay/tree/981acc88ec857d28793d37202cb4ec050b17912b/resources%2Fviews%2Findex.blade.php)
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block contenidoQueCambia %}
+<h1>{{ ticket.title }}</h1>
+<h2>{{ ticket.subtitle }}</h2>
+
+<div class="box">
+    <div class="author-info">
+        <img src="{{ ticket.author.avatar.url }}" alt="{{ ticket.author.first_name }}'s avatar">
+        <p><strong>Author:</strong> {{ ticket.author.first_name }} {{ ticket.author.last_name }} ({{ ticket.author.email }})</p>
+    </div>
+    <p>{{ ticket.content }}</p>
+    <p><strong>Created at:</strong> {{ ticket.created_at }}</p>
+    {% if request.user == ticket.author %}
+        <a href="{% url 'edit_ticket' pk=ticket.pk %}">Edit</a>
+    {% endif %}
+</div>
+
+
+<h3>Comments</h3>
+<ul>
+    {% for comment in comments %}
+        <li class="box">
+            <div class="comment">
+                <img src="{{ comment.author.avatar.url }}" alt="{{ comment.author.first_name }}'s avatar">
+                <p>{{ comment.content }}</p>
+            </div>
+            <p><strong>By:</strong> {{ comment.author.first_name }} {{ comment.author.last_name }} ({{ comment.author.email }}) on {{ comment.created_at }}</p>
+            {% if request.user == comment.author %}
+                <a href="{% url 'edit_comment' pk=comment.pk %}">Edit</a>
+                <a href="{% url 'delete_comment' pk=comment.pk %}">Delete</a>
+            {% endif %}
+
+        </li>
+    {% endfor %}
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="content" id="content" rows="5" required></textarea>
+    <input type="submit" value="Add Comment">
+</form>
+{% endblock %}
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; NGs Telecom 2024</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>

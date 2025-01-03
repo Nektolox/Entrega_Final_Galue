@@ -77,10 +77,10 @@
     {% endif %}
     <form action="{% url 'Login' %}" method="post">
         {% csrf_token %}
-        <label for="username">Nombre de Usuario:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         
-        <label for="password">Contraseña:</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         
         <input type="submit" value="Login">

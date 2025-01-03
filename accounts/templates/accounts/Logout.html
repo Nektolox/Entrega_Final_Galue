@@ -49,11 +49,12 @@
 
     {% block contenidoQueCambia %}
     <div class="container">
-        <h1>Has cerrado sesión</h1>
-        <p>Gracias por visitarnos, {{ request.COOKIES.first_name }} {{ request.COOKIES.last_name }}. Esperamos que vuelvas pronto.</p>
-        <p>Haz <a href="{% url 'Login' %}">click aquí</a> para iniciar sesión de nuevo.</p>
+        <h1>You have logged out</h1>
+        <p>Thank you for visiting us, please come back soon.</p>
+        <p>Click <a href="{% url 'Login' %}">here</a> to log in again.</p>        
     </div>
     {% endblock %}
 </body>
 
 </html>
+

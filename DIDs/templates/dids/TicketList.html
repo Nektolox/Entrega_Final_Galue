@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket List</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: white;
+            color: black;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .create-ticket-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        .create-ticket-button:hover {
+            background-color: white;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    {% extends "dids/inicio.html" %} {% load static %}
+    {% block title %}Listado de Trouble Tickets{% endblock %}
+
+    {% block contenidoQueCambia %}
+    <h1>Trouble Tickets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Priority</th>
+                <th>Last Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in tickets_with_last_comment %}
+                <tr>
+                    <td><a href="{% url 'ticket_detail' item.ticket.pk %}">{{ item.ticket.title }}</a></td>
+                    <td>{{ item.ticket.author.first_name }} {{ item.ticket.author.last_name }}</td>
+                    <td>{{ item.ticket.subtitle }}</td>
+                    <td>{% if item.last_comment %}{{ item.last_comment.created_at }}{% else %}No comments{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'ticket_create' %}" class="create-ticket-button">Create New Ticket</a>
+    {% endblock %}
+</body>
+</html>
