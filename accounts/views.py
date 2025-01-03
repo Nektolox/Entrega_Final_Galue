@@ -89,7 +89,7 @@ class CustomPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, Password
     success_message = "Tu contraseña ha sido cambiada exitosamente."
 
 
-@method_decorator(login_required, name='dispatch')  
+@login_required 
 def change_avatar(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
