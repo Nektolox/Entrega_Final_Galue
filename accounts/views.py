@@ -12,11 +12,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
+from accounts.decorators import technical_required, commercial_required, technical_or_commercial_or_superuser_required, superuser_required
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-## from django.contrib.auth.models import User
 
-
-
+@method_decorator(login_required, name='dispatch') 
+@method_decorator(technical_required, name='dispatch')
 class RegisterView(View):
     template_name = 'accounts/Register.html'
     success_url = reverse_lazy('Login')
@@ -63,6 +65,7 @@ class CustomLoginView(LoginView):
         form.add_error(None, 'Nombre de usuario o contraseña incorrectos.')
         return super().form_invalid(form)
 
+@method_decorator(login_required, name='dispatch') 
 class CustomLogoutView(LogoutView):
     template_name = 'accounts/Logout.html'
     
@@ -79,14 +82,14 @@ class CustomLogoutView(LogoutView):
             return next_page
         return redirect('Login')
 
-
+@method_decorator(login_required, name='dispatch')  
 class CustomPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     template_name = 'accounts/PasswordChange.html'
     success_url = reverse_lazy('change_password')
     success_message = "Tu contraseña ha sido cambiada exitosamente."
 
 
-@login_required
+@method_decorator(login_required, name='dispatch')  
 def change_avatar(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
@@ -100,15 +103,14 @@ def change_avatar(request):
     return render(request, 'accounts/Avatarchange.html', {'user': request.user})
 
 
-# Solo el superusuario puede acceder a estas vistas
-def superuser_required(user):
-    return user.is_superuser
-
-@user_passes_test(superuser_required)
+@login_required 
+@superuser_required
 def user_list(request):
     users = CustomUser.objects.all()
     return render(request, 'accounts/ListUsers.html', {'users': users})
 
+@method_decorator(login_required, name='dispatch')  
+@method_decorator(superuser_required, name='dispatch')
 class UserDeleteView(UserPassesTestMixin, DeleteView):
     model = CustomUser
     template_name = 'accounts/DeleteUserCom.html'
@@ -117,6 +119,8 @@ class UserDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
+@method_decorator(login_required, name='dispatch')  
+@method_decorator(superuser_required, name='dispatch')
 class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = CustomUser
     fields = ['username', 'first_name', 'last_name', 'email']

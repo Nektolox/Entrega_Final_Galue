@@ -96,6 +96,14 @@
                             </li>
                         {% endif %}
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTickets" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Tickets</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownTickets">
+                                <li><a class="dropdown-item" href="{% url 'ticket_create' %}">New Request</a></li>
+                                <li><a class="dropdown-item" href="{% url 'ticket_list' %}">Current Requests</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">Account</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
@@ -141,19 +149,18 @@
     </header>
     {% endblock %}
 
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; NGs Telecom 2024</p>
-        </div>
-    </footer>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; NGs Telecom 2024</p>
+    </div>
+</footer>
 
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 </body>
-
 </html>
-
+        
 
